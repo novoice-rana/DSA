@@ -11,16 +11,38 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        ListNode* temp =head;
-       ListNode* prev=NULL;
-        while(temp!=NULL){
-           ListNode* front= temp->next;
-            temp->next =prev;
-            prev=temp;
-            temp=front;
+    //     //iterative approach 
+    //     ListNode* temp =head;
+    //    ListNode* prev=NULL;
+    //     while(temp!=NULL){
+    //        ListNode* front= temp->next;
+    //         temp->next =prev;
+    //         prev=temp;
+    //         temp=front;
 
+    //     }
+    //     return prev;
+        // recursive approach 
+        
+
+        // Base case
+        if (head == NULL || head->next == NULL) {
+            return head;
         }
-        return prev;
+
+        // Reverse the remaining linked list
+        ListNode* newNode = reverseList(head->next);
+
+        // Reverse the current connection
+        ListNode* front = head->next;
+        front->next = head;
+
+        // Break the old connection
+        head->next = NULL;
+
+        return newNode;
+        
+
         
     }
 };

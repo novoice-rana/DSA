@@ -1,24 +1,34 @@
 class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
-        unordered_map<int,int>nge_map;
-        stack<int>st;
-        for(int num:nums2){
-            while(!st.empty() && st.top()<num){
-                nge_map[st.top()]=num;
+       int nge_arr[10005];
+        std::stack<int> st;
+
+        // Traverse nums2 from right to left
+        for (int i = nums2.size() - 1; i >= 0; --i) {
+            int num = nums2[i];
+            
+            // Pop elements smaller than or equal to the current element
+            while (!st.empty() && st.top() <= num) {
                 st.pop();
             }
+            
+            // If stack is empty, no greater element (-1), otherwise top of stack
+            if (st.empty()) {
+                nge_arr[num] = -1;
+            } else {
+                nge_arr[num] = st.top();
+            }
+            
             st.push(num);
         }
 
-        while(!st.empty()){
-            nge_map[st.top()]=-1;
-            st.pop();
+        // Construct the result array for nums1
+        std::vector<int> result;
+        for (int num : nums1) {
+            result.push_back(nge_arr[num]);
         }
-        vector<int>result;
-        for(int num: nums1){
-            result.push_back(nge_map[num]);
-        }
+
         return result;
     }
 };

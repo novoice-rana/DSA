@@ -5,16 +5,17 @@ public:
         
     }
      stack<pair<int,int>>st;
-        int idx =0;
+    
     
     int next(int price) {
-        idx++;
-        while(!st.empty()&& st.top().first<=price){
+        int span =1;
+        while(!st.empty() && st.top().first<= price){
+            span = span + st.top().second;
             st.pop();
         }
-        int ans= st.empty() ? idx:idx-st.top().second;
-        st.push({price,idx});
-        return ans;
+        st.push({price,span});
+        return span;
+        
     }
 };
 
